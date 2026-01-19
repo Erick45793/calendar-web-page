@@ -1,0 +1,32 @@
+# Eliminar el workflow viejo
+rm .github/workflows/deploy.yml
+
+# Crear nuevo workflow super simple
+@'
+name: Deploy Static Site
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          
+      - run: npm ci
+      - run: npm run build
+      
+      - name: Deploy to Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: out
+          clean: true
+'@ | Out-File -FilePath .github/workflows/deploy.yml -Encoding UTF8
