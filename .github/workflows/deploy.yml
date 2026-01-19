@@ -1,9 +1,4 @@
-# Eliminar el workflow viejo
-rm .github/workflows/deploy.yml
-
-# Crear nuevo workflow super simple
-@'
-name: Deploy Static Site
+﻿name: Deploy Static Site
 
 on:
   push:
@@ -29,4 +24,3 @@ jobs:
           branch: gh-pages
           folder: out
           clean: true
-'@ | Out-File -FilePath .github/workflows/deploy.yml -Encoding UTF8
